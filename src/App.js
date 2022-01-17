@@ -1,23 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import NavBar from "./components/navbar";
+import * as actions from "./store/todos";
+import "./App.css";
 
-function App() {
+function App({ store }) {
+  console.log(store.getState());
+  //store.dispatch(actions.todoAdded({ title: "tst2", level: 1 }));
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar store={store} />
     </div>
   );
 }

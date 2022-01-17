@@ -1,14 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import configureStore from "./store/configureStore";
+import * as actions from "./store/todos";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+const store = configureStore();
+
+store.dispatch(actions.todoAdded({ title: "tst1", level: 1 }));
+console.log(store.getState());
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App store={store} />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
