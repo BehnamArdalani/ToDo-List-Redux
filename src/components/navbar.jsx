@@ -1,7 +1,20 @@
 import * as actions from "../store/todos";
+import { useDispatch } from "react-redux";
 
-const NavBar = ({ store }) => {
-  // console.log(store.getState());
+const NavBar = () => {
+  const dispatch = useDispatch();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    dispatch(
+      actions.todoAdded({
+        title: e.target["title"].value,
+        description: e.target["description"].value,
+      })
+    );
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="#">
@@ -19,11 +32,13 @@ const NavBar = ({ store }) => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-3">
               <input
                 type="text"
+                name="title"
+                id="title"
                 className="form-control"
                 placeholder="New title"
               />
@@ -31,6 +46,8 @@ const NavBar = ({ store }) => {
             <div className="col-8">
               <input
                 type="text"
+                name="description"
+                id="description"
                 className="form-control"
                 placeholder="New Description"
               />

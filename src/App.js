@@ -1,15 +1,24 @@
 import NavBar from "./components/navbar";
+import configureStore from "./store/configureStore";
+
+import { Provider } from "react-redux";
 import * as actions from "./store/todos";
 import "./App.css";
+import ToDO from "./components/todo";
 
-function App({ store }) {
-  console.log(store.getState());
+function App() {
+  //console.log(store.getState());
   //store.dispatch(actions.todoAdded({ title: "tst2", level: 1 }));
 
+  const store = configureStore();
+
   return (
-    <div className="App">
-      <NavBar store={store} />
-    </div>
+    <Provider store={store}>
+      <div className="container">
+        <NavBar />
+        <ToDO />
+      </div>
+    </Provider>
   );
 }
 

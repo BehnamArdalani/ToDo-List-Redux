@@ -3,16 +3,14 @@ const TODO_ADDED = "todoAdded";
 const TODO_REMOVED = "todoRemoved";
 const TODO_EDITED = "todoEdited";
 //const TODO_APPROVED = "todoApproved";
-
+const TODO_LEVELS = ["Not Started", "In progress", "Completed"];
 // Action creators:
 export function todoAdded(todo) {
   return {
     type: TODO_ADDED,
     payload: {
       title: todo.title,
-      // startDate: todo.startDate,
-      // endDate: todo.endDate,
-      level: todo.level,
+      description: todo.description,
     },
   };
 }
@@ -23,8 +21,7 @@ export function todoEdited(todo) {
     payload: {
       id: todo.id,
       title: todo.title,
-      // startDate: todo.startDate,
-      // endDate: todo.endDate,
+      description: todo.description,
       level: todo.level,
     },
   };
@@ -58,9 +55,8 @@ export default function reducer(state = [], action) {
         {
           id: ++lastId,
           title: action.payload.title,
-          // startDate: action.payload.startDate,
-          // endDate: action.payload.endDate,
-          level: action.payload.level,
+          description: action.payload.description,
+          level: TODO_LEVELS[0],
         },
       ];
 
@@ -70,10 +66,9 @@ export default function reducer(state = [], action) {
           ? t
           : {
               ...t,
-              title: action.title,
-              // startDate: action.startDate,
-              // endDate: action.endDate,
-              level: action.level,
+              title: action.payload.title,
+              description: action.payload.description,
+              level: action.payload.level,
             }
       );
 
