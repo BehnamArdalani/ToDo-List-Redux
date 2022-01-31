@@ -2,9 +2,33 @@
 const TODO_ADDED = "todoAdded";
 const TODO_REMOVED = "todoRemoved";
 const TODO_EDITED = "todoEdited";
-//const TODO_APPROVED = "todoApproved";
 const TODO_LEVELS = ["Not Started", "In progress", "Completed"];
+const MODAL_OPENED = "modalOpened";
+const MODAL_CLOSED = "modalClosed";
+
 // Action creators:
+export function modalOpened(todo) {
+  return {
+    type: MODAL_OPENED,
+    payload: {
+      id: todo.id,
+      title: todo.title,
+      description: todo.description,
+      level: todo.level,
+      isOpen: true,
+    },
+  };
+}
+
+export function modalClosed() {
+  return {
+    type: MODAL_CLOSED,
+    payload: {
+      isOpen: false,
+    },
+  };
+}
+
 export function todoAdded(todo) {
   return {
     type: TODO_ADDED,
@@ -36,18 +60,26 @@ export function todoRemoved(id) {
   };
 }
 
-// export function todoApproved(id) {
-//   return {
-//     type: TODO_APPROVED,
-//     payload: {
-//       id,
-//     },
-//   };
-// }
+export function modal(state = [], action) {
+  switch (action.type) {
+    case MODAL_OPENED:
+      return {
+        id: action.payload.id,
+        title: action.payload.title,
+        description: action.payload.description,
+        level: action.payload.level,
+        isOpen: action.payload.isOpen,
+      };
+    case MODAL_CLOSED:
+      return { isOpen: action.payload.isOpen };
+    default:
+      return state;
+  }
+}
 
 // Action reducer:
 let lastId = 0;
-export default function reducer(state = [], action) {
+export function todos(state = [], action) {
   switch (action.type) {
     case TODO_ADDED:
       return [

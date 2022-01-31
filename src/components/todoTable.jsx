@@ -5,19 +5,38 @@ import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../store/todos";
 
 const ToDoTable = () => {
-  const data = useSelector((state) => state);
+  const { todos: data, modal } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  let isOpen = false;
-
-  const handleEdit = (item) => {
-    console.log("Edit  " + item.title);
-    isOpen = true;
+  const handleDelete = (item) => {
+    dispatch(actions.todoRemoved(item.id));
   };
 
-  const handleDelete = (item) => {
-    console.log("Delete  " + item.title);
-    dispatch(actions.todoRemoved(item.id));
+  const handleEdit = (item) => {
+    dispatch(actions.modalOpened(item));
+  };
+
+  const handleCloseModal = () => {
+    dispatch(actions.modalClosed());
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const editedModal = {
+      id: e.target[0].value,
+      title: e.target[1].value,
+      description: e.target[2].value,
+      level: e.target[3].value,
+    };
+    dispatch(actions.todoEdited(modal));
+    dispatch(actions.modalClosed());
+  }
+
+  const handleChange = ({ currentTarget: input }) => {
+    const item = modal;
+    item[input.name] = input.value;
+    dispatch(actions.todoEdited(item));
   };
 
   return (
@@ -67,7 +86,7 @@ const ToDoTable = () => {
         </tbody>
       </table>
 
-      <Modal show={isOpen} onHide={handleCloseModal}>
+      <Modal show={modal.isOpen} onHide={handleCloseModal}>
         <ModalHeader closeButton> Edit ToDo Item </ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit}>
@@ -75,7 +94,7 @@ const ToDoTable = () => {
               type="text"
               id="id"
               name="id"
-              value={data.id}
+              value={modal.id}
               onChange={handleChange}
               className="form-control d-none"
             />
@@ -87,7 +106,7 @@ const ToDoTable = () => {
                 type="text"
                 id="title"
                 name="title"
-                value={data.title}
+                value={modal.title}
                 onChange={handleChange}
                 className="form-control"
               />
@@ -100,7 +119,7 @@ const ToDoTable = () => {
                 type="text"
                 id="description"
                 name="description"
-                value={data.description}
+                value={modal.description}
                 onChange={handleChange}
                 className="form-control"
               />
@@ -111,15 +130,17 @@ const ToDoTable = () => {
               </label>
               <input
                 type="text"
-                id="status"
-                name="status"
-                value={data.status}
+                id="level"
+                name="level"
+                value={modal.level}
                 onChange={handleChange}
                 className="form-control"
               />
             </div>
 
-            <button className="btn btn-primary">Save</button>
+            <button className="btn btn-primary" type="submit">
+              Save
+            </button>
           </form>
         </ModalBody>
       </Modal>
@@ -128,9 +149,3 @@ const ToDoTable = () => {
 };
 
 export default ToDoTable;
-
-function handleCloseModal() {}
-
-function handleSubmit() {}
-
-function handleChange() {}
