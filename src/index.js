@@ -1,19 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
-import * as actions from "./store/todos";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-// store.dispatch(
-//   actions.todoAdded({
-//     title: "title 1",
-//     description: "Description of title 1",
-//   })
-// );
-//console.log(store.getState());
 
 ReactDOM.render(
   <React.StrictMode>

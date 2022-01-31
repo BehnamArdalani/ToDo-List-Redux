@@ -22,13 +22,6 @@ const ToDoTable = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    const editedModal = {
-      id: e.target[0].value,
-      title: e.target[1].value,
-      description: e.target[2].value,
-      level: e.target[3].value,
-    };
     dispatch(actions.todoEdited(modal));
     dispatch(actions.modalClosed());
   }
