@@ -2,9 +2,10 @@
 const TODO_ADDED = "todoAdded";
 const TODO_REMOVED = "todoRemoved";
 const TODO_EDITED = "todoEdited";
-const TODO_LEVELS = ["Not Started", "In progress", "Completed"];
 const MODAL_OPENED = "modalOpened";
 const MODAL_CLOSED = "modalClosed";
+
+export const TODO_LEVELS = ["Not Started", "In progress", "Completed"];
 
 // Action creators:
 export function modalOpened(todo) {
@@ -88,7 +89,7 @@ export function todos(state = [], action) {
           id: ++lastId,
           title: action.payload.title,
           description: action.payload.description,
-          level: TODO_LEVELS[0],
+          level: 0,
         },
       ];
 
@@ -106,10 +107,7 @@ export function todos(state = [], action) {
 
     case TODO_REMOVED:
       return state.filter((t) => t.id !== action.payload.id);
-    // case TODO_APPROVED:
-    //   return state.map((t) =>
-    //     t.id !== action.payload.id ? t : { ...t, level: true }
-    //   );
+
     default:
       return state;
   }

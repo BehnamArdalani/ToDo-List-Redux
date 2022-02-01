@@ -52,10 +52,13 @@ const ToDoTable = () => {
         </thead>
         <tbody>
           {data.map((item) => (
-            <tr key={item.id} className="row">
+            <tr
+              key={item.id}
+              className={item.level === 2 ? "row table-success" : "row"}
+            >
               <td className="col-2">{item.title}</td>
               <td className="col-6">{item.description}</td>
-              <td className="col-2">{item.level}</td>
+              <td className="col-2">{actions.TODO_LEVELS[item.level]}</td>
               <td className="col-1">
                 <button
                   type="button"
@@ -121,17 +124,20 @@ const ToDoTable = () => {
               <label htmlFor="Status" className="col-form-label">
                 Status:
               </label>
-              <input
-                type="text"
+              <select
                 id="level"
                 name="level"
                 value={modal.level}
                 onChange={handleChange}
                 className="form-control"
-              />
+              >
+                {actions.TODO_LEVELS.map((name, index) => (
+                  <option value={index}>{name}</option>
+                ))}
+              </select>
             </div>
 
-            <button className="btn btn-primary" type="submit">
+            <button id="saveModal" className="btn btn-primary" type="submit">
               Save
             </button>
           </form>

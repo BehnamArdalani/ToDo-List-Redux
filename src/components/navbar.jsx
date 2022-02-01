@@ -13,6 +13,9 @@ const NavBar = () => {
         description: e.target["description"].value,
       })
     );
+
+    e.target["title"].value = "";
+    e.target["description"].value = "";
   }
 
   return (
